@@ -1,5 +1,6 @@
 package com.nopcommerce.demo.testsuite;
 
+import com.nopcommerce.demo.loadproperty.LoadProperty;
 import com.nopcommerce.demo.pages.*;
 import com.nopcommerce.demo.testbase.TestBase;
 import org.testng.annotations.BeforeTest;
@@ -10,17 +11,26 @@ import static com.nopcommerce.demo.utility.Utility.getRandomString;
 public class RegisterTestCase extends TestBase {
 
     static String email = null;
-    String password = "abc123";
+//    String password = "abc123";
 
 
     //object creation
     HomePage homePage = new HomePage();
     RegisterPage registerPage = new RegisterPage();
     RegistrationCompletePage registrationCompletePage = new RegistrationCompletePage();
+    LoadProperty loadProperty = new LoadProperty();
+    //getting key from config.properties
+    String firstName = loadProperty.getProperty("firstName");
+    String lastName = loadProperty.getProperty("lastName");
+    String password = loadProperty.getProperty("password");
+    String companyName = loadProperty.getProperty("companyName");
+    String dayDOB = loadProperty.getProperty("dayDOB");
+    String monthDOB = loadProperty.getProperty("monthDOB");
+    String yearDOB = loadProperty.getProperty("yearDOB");
 
 
     //assigning random value for email every time test cases run
-    @BeforeTest
+    @BeforeTest(groups = {"Regression","Sanity","Smoke"})
     public static void setUp() {
         email = "xyz" + getRandomString(5) + "@gmail.com";
     }
@@ -33,7 +43,7 @@ public class RegisterTestCase extends TestBase {
       Message   “Your Personal Details“
       Assert above message.
     */
-    @Test
+    @Test(priority = 0, groups = {"Sanity", "Regression"})
     public void userShouldNavigateToRegisterPageSuccessfully() {
         //click on Register link on HomePage
         homePage.clickOnRegisterLink();
@@ -52,37 +62,38 @@ public class RegisterTestCase extends TestBase {
         Success Message  “Your registration completed”
         Assert above message.
     */
-    @Test
-    public void userShouldRegisterSuccessfullyAndLoginUsingSameCredentials() {
+    @Test(priority = 1, groups = {"Smoke", "Regression"})
+    public void userShouldRegisterSuccessfullyAndLoginUsingSameCredentials() throws InterruptedException {
         //click on Register link on HomePage
         homePage.clickOnRegisterLink();
 
         //select Male gender radio button
+        Thread.sleep(3000);
         registerPage.selectMaleGenderRadioButton();
 
         //select Female gender radio button
         //registerPage.selectFemaleGenderRadioButton();
-
+        Thread.sleep(3000);
         //send text to First Name field
-        registerPage.sendTextToFirstNameField("Prime");
+        registerPage.sendTextToFirstNameField(firstName);
 
         //send text to Last Name field
-        registerPage.sendTextToLastNameField("Testing");
+        registerPage.sendTextToLastNameField(lastName);
 
         //select day from DOB drop down menu
-        registerPage.selectDayDOBFromDropDownMenu("15");
+        registerPage.selectDayDOBFromDropDownMenu(dayDOB);
 
         //select month from DOB drop down menu
-        registerPage.selectMonthDOBFromDropDownMenu("May");
+        registerPage.selectMonthDOBFromDropDownMenu(monthDOB);
 
         //select year from DOB drop down menu
-        registerPage.selectYearDOBFromDropDownMenu("2014");
+        registerPage.selectYearDOBFromDropDownMenu(yearDOB);
 
         //send text to Email field
         registerPage.sendTextToEmailField(email);
 
         //send text to Company name field
-        registerPage.sendTextToCompanyField("Square 1");
+        registerPage.sendTextToCompanyField(companyName);
 
         //check Newsletter checkbox is selected
         registerPage.selectNewsLetterCheckBox();

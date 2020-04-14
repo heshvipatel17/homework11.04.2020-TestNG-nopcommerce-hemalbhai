@@ -12,13 +12,13 @@ public class BrowserSelector extends BasePage {
 
     public void selectBrowser(String browser) {
         if (browser.equalsIgnoreCase("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver",projectPath +"/drivers/chromedriver.exe");
             driver = new ChromeDriver();
         } else if (browser.equalsIgnoreCase("firefox")) {
-            System.setProperty("webdriver.gecko.driver", "drivers/geckodriver.exe");
+            System.setProperty("webdriver.gecko.driver", projectPath+"/drivers/geckodriver.exe");
             driver = new FirefoxDriver();
         } else if (browser.equalsIgnoreCase("opera")) {
-            System.setProperty("webdriver.opera.driver", "drivers/operadriver.exe");
+            System.setProperty("webdriver.opera.driver",projectPath+ "/drivers/operadriver.exe");
             driver = new OperaDriver();
         } else if (browser.equalsIgnoreCase("ie")) {
             System.setProperty("webdriver.ie.driver", "drivers/IEDriverServer2.40.0.exe");

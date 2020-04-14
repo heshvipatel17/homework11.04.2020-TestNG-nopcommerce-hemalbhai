@@ -20,7 +20,7 @@ public class ComputerTestCase extends TestBase {
     Test 01
     User should navigate to Computers page & Assert text "Computers"
      */
-    @Test
+    @Test(priority = 0, groups = {"Sanity","Regression"})
     public void userShouldNavigateToComputerPage() {
         //click on computer tab on homepage
         homePage.clickOnComputerTab();
@@ -34,14 +34,17 @@ public class ComputerTestCase extends TestBase {
     User should navigate to Computers page, select Build your own computer,
     select 400gb HDD option radio button, select Add to cart & Assert message "The product has been added to your shopping cart"
      */
-    @Test
-    public void addProductToShoppingCart() {
+    @Test(priority = 1, groups = {"Smoke","Regression"})
+
+    public void addProductToShoppingCart() throws InterruptedException {
         //click the computer tab on HomePage
         homePage.clickOnComputerTab();
         //click the desktop link on ComputerPage
+        Thread.sleep(3000);
         computerPage.clickOnDesktopsLink();
         //click on Build your own computer on DesktopPage
         desktopPage.clickOnBuildYourOwnComputer();
+        Thread.sleep(3000);
         //select 400gb HDD radio button
         buildYourOwnComputerPage.clickOnHDD400GBRadioButton();
         //click on Add to cart button
